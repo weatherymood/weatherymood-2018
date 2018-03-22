@@ -1,0 +1,152 @@
+#song{
+    width: 300px;
+    perspective: 1200px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    img{
+        display: block;
+        opacity: 1;
+        transition: opacity .2s ease-out;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: #000;
+        overflow: hidden;
+        backface-visibility: hidden;
+    }
+    #card{
+        background: #fff;
+        display: block;
+        transform: rotateY(-40deg) translateZ(0);
+        transform-style: preserve-3d;
+        transition: all .5s ease-in-out;
+        opacity: 0;
+        box-shadow: 0 0 0 8px rgba(0,0,0,0.1);
+        height: 0;
+        padding-bottom: 100%;
+        position: relative;
+        will-change: transform, opacity;
+        &.flipped{
+            opacity: 1;
+            transform: rotateY(0deg) translateZ(0);
+        }
+        &:hover{
+            img{
+                opacity: .9;
+            }
+            #song-replay{
+                transform: translateX(-50%) translateY(0%);
+                opacity: 1;
+            }
+        }
+    }
+
+}
+
+#song-details{
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    transition: opacity 1s ease-out;
+    text-transform: uppercase;
+    color: #000;
+    font-size: 20px;
+    top: 106%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, 0%);
+    &.active{
+        opacity: 1;
+    }
+}
+
+#song-details.active #song-name, #song-details.active #song-album{
+    opacity: 1;
+}
+
+#song-name{
+    font-weight: 300;
+    text-transform: uppercase;
+    opacity: 0;
+    font-size: 14px;
+    overflow: hidden;
+    white-space: nowrap;
+    letter-spacing: 1px;
+    text-overflow: ellipsis;
+    padding: 10px 15px;
+    color: rgba(0,0,0,0.7);
+}
+
+#song-album{
+    opacity: 0;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+#song-play{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    .play{
+        color: #fff;
+        width: 50px;
+        height: 50px;
+        background: #2ebd59;
+        font-size: 14px;
+        line-height: 50px;
+        border-radius: 500px;
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: background-color .15s ease;
+        box-shadow: 0 0 80px 0px rgba(0,0,0,0.6);
+        &:after{
+            content: "";
+            display: block;
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 13px solid #fff;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-40%,-50%);
+        }
+    }
+
+    .play:hover{
+        background: #1ed760;
+    }
+}
+
+#song-replay{
+    // display: none;
+    opacity: 0;
+    background: rgba(0,0,0,0.4);
+    width: 16px;
+    height: 16px;
+    padding: 8px;
+    border-radius: 100px;
+    position: absolute;
+    left: 50%;
+    top: 130%;
+    transform: translateX(-50%) translateY(20%);
+    cursor: pointer;
+    transition: all .2s ease-out;
+    svg{
+        pointer-events: none;
+    }
+    &:hover{
+        background: rgba(0,0,0,0.8);
+    }
+}
