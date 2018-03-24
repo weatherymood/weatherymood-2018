@@ -117,28 +117,6 @@ class Moods {
     }
 }
 
-class Cookies {
-    setCookie(nome, valore, ggScadenza, path) {
-        if (path == undefined) {
-            path = '/';
-        }
-        var d = new Date();
-        d.setTime(d.getTime() + (ggScadenza * 24 * 60 * 60 * 1000));
-        var expires = `expires= ${d.toUTCString()}`;
-        document.cookie = nome + '=' + valore + '; ' + expires + '; path=' + path;
-    }
-    getCookie(nome) {
-        var name = `${nome} =`;
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ')
-                c = c.substring(1);
-            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-        }
-        return '';
-    }
-}
 
 // GET GEOLOCATION
 class Geolocation {
@@ -161,16 +139,15 @@ class Geolocation {
     }
 
     checkPosition(cb) {
-        console.log(COOKIES.getCookie('SWM_Position'))
-        // if (localStorage.getItem('SWM_Position') === null) {
-        //     if (cb && typeof cb === 'function') {
-        //         this.getPosition(cb)
-        //     }
-        // } else {
-        //     if (cb && typeof cb === 'function') {
-        //         cb()
-        //     }
-        // }
+        if (localStorage.getItem('SWM_Position') === null) {
+            if (cb && typeof cb === 'function') {
+                this.getPosition(cb)
+            }
+        } else {
+            if (cb && typeof cb === 'function') {
+                cb()
+            }
+        }
     }
 }
 
@@ -213,15 +190,13 @@ class Song {
     getSong(cb, mood){
 
         let keyword = MOODS.getKeyword(mood)
-        const token = 'BQAn1-dh_8RRj0Xb0FjojDwwpRumaVqoMOzNxsimu3TgLrQoxbli_g18y-uQOLwB3QtS9W7GJdOFhheQppeTYUfztAouKmm7TZiDmlSwNFxUE2M8S9BbxL9dXouKYTyughNm_4WXeIF9kvY'
         const config = {
-            url: `https://api.spotify.com/v1/search?q=${keyword}&type=playlist&limit=50`
+            url: `https://www.mrosati.it/weatherymood/?search=${keyword}`
         }
 
         const request = new XMLHttpRequest()
 
         request.open('GET', config.url, true)
-        request.setRequestHeader('Authorization', `Bearer ${token}`);
 
         request.onload = function(response) {
             if (this.status >= 200 && this.status < 400) {
@@ -258,7 +233,6 @@ const WEATHER      = new Weather()
 const SONG         = new Song()
 const MOODS        = new Moods()
 const PRELOADER    = new Preloader()
-const COOKIES      = new Cookies()
 
 let firstCall, secondCall, thirdCall
 
