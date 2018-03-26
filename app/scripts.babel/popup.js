@@ -120,15 +120,20 @@ class Moods {
 
 // GET GEOLOCATION
 class Geolocation {
+    constructor() {
+        const _trigger = document.querySelector('#reset-location')
+        _trigger.addEventListener('click', this.resetLocation)
+    }
+
     getPosition(cb){
-        navigator.geolocation.getCurrentPosition (
+        navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.savePosition(`${position.coords.latitude},${position.coords.longitude}`, cb)
                 console.log('position', position)
             },
-            (error) => {
+            (err) => {
                 this.savePosition('21.40706,149.92483', cb)
-                console.log('position', error)
+                console.warn(`GEOLOCATION ERROR(${err.code}): ${err.message}`);
             }
         )
     }
@@ -136,6 +141,13 @@ class Geolocation {
     savePosition(position, cb) {
         localStorage.setItem('SWM_Position', position)
         cb()
+    }
+
+    resetLocation() {
+        localStorage.removeItem('SWM_Position')
+        setTimeout(() => {
+            window.location.reload()
+        }, 100)
     }
 
     checkPosition(cb) {
@@ -171,6 +183,7 @@ class Weather {
                 // Success!
                 const data = JSON.parse(this.response)
                 cb(this.response)
+                document.querySelector('#user-location span').textContent = data.name
             } else {
                 // We reached our target server, but it returned an error
                 cb(this.response)
