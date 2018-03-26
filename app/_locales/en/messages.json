@@ -1,10 +1,10 @@
 {
   "appName": {
-    "message": "weatherymood 2018",
-    "description": "The name of the application"
+    "message": "Weathery Mood",
+    "description": "Weathery Mood is a Chrome extension that lets you discover new playlists based on the current weather in your city."
   },
   "appDescription": {
-    "message": "My Chrome Extension",
-    "description": "The description of the application"
+    "message": "Weathery Mood is a Chrome extension that lets you discover new playlists based on the current weather in your city.",
+    "description": "Weathery Mood is a Chrome extension that lets you discover new playlists based on the current weather in your city."
   }
 }
